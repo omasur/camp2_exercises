@@ -1,92 +1,108 @@
 /* global beforeAll describe test expect */
 const fs = require("fs");
 const path = require("path");
+const readcode = require("../../../.test_utils/readcode");
 
 let studentCode;
 
 beforeAll(() => {
-  // Loads the content of the student's code
-  return new Promise(function(resolve, reject) {
-    fs.readFile(
-      path.join(__dirname, "../02_arrays_methods.js"),
-      "utf8",
-      function(err, text) {
-        if (err) {
-          reject(err);
-          return;
-        }
-        studentCode = text;
-        resolve();
-      }
-    );
-  });
+  // Loads the student's code
+  studentCode = readcode(path.resolve(__dirname, "../02_arrays_methods.js"));
+  return studentCode;
 });
 
 describe("digits", () => {
   test("digits exists", () => {
-    const digits = eval(studentCode + "; digits;");
+    return studentCode.then(code => {
+      const digits = eval(code + "; digits;");
 
-    expect(digits).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      expect(digits).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    });
   });
 
   test("digits has been defined with push", () => {
-    const found = studentCode.match(/digits(\s*?)\.push/g);
+    return studentCode.then(code => {
+      const found = code.match(/digits(\s*?)\.push/g);
 
-    expect(found.length).toBe(10);
+      if (/for\s*?\((.*?);(.*?);(.*?)\)/.test(code)) {
+        console.warn(
+          "Smart move to try a for loop here but no loops in this exercise"
+        );
+      }
+      if (/while\s*?\((.*?)\)/.test(code)) {
+        console.warn(
+          "Smart move to try a while loop here but no loops in this exercise"
+        );
+      }
+
+      if (found !== null) {
+        expect(found.length).toBe(10);
+      }
+    });
   });
 });
 
 describe("last", () => {
   test("last exists", () => {
-    const last = eval(studentCode + "; last;");
+    return studentCode.then(code => {
+      const last = eval(code + "; last;");
 
-    expect(last).toEqual(9);
+      expect(last).toEqual(9);
+    });
   });
 
   test("last is linked to the last cell of digits", () => {
-    const changedStudentCode = studentCode.replace(
-      new RegExp(/(let|const) last/m),
-      "digits.push(true); $&"
-    );
-    const last = eval(changedStudentCode + "; last;");
-    expect(last).toBe(true);
+    return studentCode.then(code => {
+      const changedStudentCode = code.replace(
+        new RegExp(/(let|const) last/m),
+        "digits.push(true); $&"
+      );
+      const last = eval(changedStudentCode + "; last;");
+      expect(last).toBe(true);
+    });
   });
 });
 
 test("litteralDigits exists", () => {
-  const litteralDigits = eval(studentCode + "; litteralDigits;");
+  return studentCode.then(code => {
+    const litteralDigits = eval(code + "; litteralDigits;");
 
-  expect(litteralDigits).toEqual([
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine"
-  ]);
+    expect(litteralDigits).toEqual([
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine"
+    ]);
+  });
 });
 
 describe("allDigits", () => {
   test("allDigits exists", () => {
-    const allDigits = eval(studentCode + "; allDigits;");
+    return studentCode.then(code => {
+      const allDigits = eval(code + "; allDigits;");
 
-    expect(allDigits).toEqual(
-      "zero - one - two - three - four - five - six - seven - eight - nine"
-    );
+      expect(allDigits).toEqual(
+        "zero - one - two - three - four - five - six - seven - eight - nine"
+      );
+    });
   });
 
   test("allDigits is linked to litteralDigits, changing it should change allDigits", () => {
-    const changedStudentCode = studentCode.replace(
-      new RegExp(/(let|const) allDigits/m),
-      "litteralDigits[5] = 'cinq'; $&"
-    );
-    const allDigits = eval(changedStudentCode + "; allDigits;");
-    expect(allDigits).toBe(
-      "zero - one - two - three - four - cinq - six - seven - eight - nine"
-    );
+    return studentCode.then(code => {
+      const changedStudentCode = code.replace(
+        new RegExp(/(let|const) allDigits/m),
+        "litteralDigits[5] = 'cinq'; $&"
+      );
+      const allDigits = eval(changedStudentCode + "; allDigits;");
+      expect(allDigits).toBe(
+        "zero - one - two - three - four - cinq - six - seven - eight - nine"
+      );
+    });
   });
 });

@@ -1,42 +1,46 @@
 /* global beforeAll test expect */
 const fs = require("fs");
 const path = require("path");
+const readcode = require("../../../.test_utils/readcode");
 
 let studentCode;
-
 beforeAll(() => {
-  // Loads the content of the student's code
-  return new Promise(function(resolve, reject) {
-    fs.readFile(path.join(__dirname, "../05_descending.js"), "utf8", function(
-      err,
-      text
-    ) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      studentCode = text;
-      resolve();
-    });
-  });
+  // Loads the student's code
+  studentCode = readcode(path.resolve(__dirname, "../05_descending.js"));
+  return studentCode;
 });
 
 test("print numbers from zero to nine", () => {
-  numbers = [];
-  _consolelog = console.log;
-  console.log = thing => numbers.push(thing);
+  return studentCode.then(code => {
+    numbers = [];
+    _consolelog = console.log;
+    console.log = thing => numbers.push(thing);
 
-  eval(studentCode);
+    eval(code);
 
-  console.log = _consolelog;
-  const expected = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'].reverse();
-  
-  expect(numbers).toEqual(expected);
+    console.log = _consolelog;
+    const expected = [
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine"
+    ].reverse();
+
+    expect(numbers).toEqual(expected);
+  });
 });
 
 test("one for was used", () => {
-  const fors = studentCode.match(/for(\s*?)\(.*?;.*?;.*?\)/gm);
+  return studentCode.then(code => {
+    const fors = code.match(/for(\s*?)\(.*?;.*?;.*?\)/gm);
 
-  expect(fors).toBeTruthy();
-  expect(fors.length).toBe(1);
+    expect(fors).toBeTruthy();
+    expect(fors.length).toBe(1);
+  });
 });

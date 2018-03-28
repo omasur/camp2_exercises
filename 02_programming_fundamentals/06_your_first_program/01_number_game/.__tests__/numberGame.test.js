@@ -1,151 +1,170 @@
 const fs = require("fs");
 const path = require("path");
+const readcode = require("../../../.test_utils/readcode");
 
 let studentCode;
-
 beforeAll(() => {
-  // Loads the content of the student's code
-  return new Promise(function(resolve, reject) {
-    fs.readFile(path.join(__dirname, "../number_game.js"), "utf8", function(
-      err,
-      text
-    ) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      studentCode = text;
-      resolve();
-    });
+  // Loads the student's code
+  studentCode = readcode(path.resolve(__dirname, "../number_game.js"));
+  return studentCode;
+});
+
+test("should work", () => {
+  return studentCode.then(code => {
+    const random = jest.fn();
+    random.mockReturnValueOnce(0.13);
+    Math.random = random;
+
+    const consoleLog = jest.fn();
+    console.log = consoleLog;
+
+    const readline = require("readline");
+    const question = jest
+      .fn()
+      .mockImplementationOnce((_text, callback) => callback("13"));
+
+    const reader = jest.fn(_object => ({
+      question: question,
+      close: jest.fn()
+    }));
+
+    readline.createInterface = reader;
+
+    const executedCode = eval(code);
+
+    expect(consoleLog).toHaveBeenCalledWith("You won!");
+    expect(question).toHaveBeenCalledTimes(1);
   });
 });
 
-test('should work', () => {
-  const random = jest.fn();
-  random.mockReturnValueOnce(0.13);
-  Math.random = random;
+test("handle non number inputs", () => {
+  return studentCode.then(code => {
+    const random = jest.fn();
+    random.mockReturnValueOnce(0.42);
+    Math.random = random;
 
-  const consoleLog = jest.fn();
-  console.log = consoleLog
+    const consoleLog = jest.fn();
+    console.log = consoleLog;
 
-  const readline = require("readline");
-  const question =  jest.fn()
-    .mockImplementationOnce((_text, callback) => callback("13"))
+    const readline = require("readline");
+    const question = jest
+      .fn()
+      .mockImplementationOnce((_text, callback) => callback("Hello"))
+      .mockImplementationOnce((text, callback) => {
+        expect(text).toEqual("This was not a number\n");
+        callback("42");
+      });
 
-  const reader = jest.fn((_object) => ({question: question, close: jest.fn()}));
+    const reader = jest.fn(_object => ({
+      question: question,
+      close: jest.fn()
+    }));
 
-  readline.createInterface = reader;
+    readline.createInterface = reader;
 
-  const executedCode = eval(studentCode);
+    const executedCode = eval(code);
 
-  expect(consoleLog).toHaveBeenCalledWith("You won!");
-  expect(question).toHaveBeenCalledTimes(1);
-})
+    expect(consoleLog).toHaveBeenCalledWith("You won!");
+    expect(question).toHaveBeenCalledTimes(2);
+  });
+});
 
-test('handle non number inputs', () => {
-  const random = jest.fn();
-  random.mockReturnValueOnce(0.42);
-  Math.random = random;
+test("handle not in range inputs", () => {
+  return studentCode.then(code => {
+    const random = jest.fn();
+    random.mockReturnValueOnce(0.86);
+    Math.random = random;
 
-  const consoleLog = jest.fn();
-  console.log = consoleLog
+    const consoleLog = jest.fn();
+    console.log = consoleLog;
 
-  const readline = require("readline");
-  const question =  jest.fn()
-    .mockImplementationOnce((_text, callback) => callback("Hello"))
-    .mockImplementationOnce((text, callback) => {
-      expect(text).toEqual("This was not a number\n")
-      callback("42")
-    })
+    const readline = require("readline");
+    const question = jest
+      .fn()
+      .mockImplementationOnce((_text, callback) => callback("-5"))
+      .mockImplementationOnce((text, callback) => {
+        expect(text).toEqual("The number is between 1 and 100\n");
+        callback("1337");
+      })
+      .mockImplementationOnce((text, callback) => {
+        expect(text).toEqual("The number is between 1 and 100\n");
+        callback("86");
+      });
 
-  const reader = jest.fn((_object) => ({question: question, close: jest.fn()}));
+    const reader = jest.fn(_object => ({
+      question: question,
+      close: jest.fn()
+    }));
 
-  readline.createInterface = reader;
+    readline.createInterface = reader;
 
-  const executedCode = eval(studentCode);
+    const executedCode = eval(code);
 
-  expect(consoleLog).toHaveBeenCalledWith("You won!");
-  expect(question).toHaveBeenCalledTimes(2);
-})
+    expect(consoleLog).toHaveBeenCalledWith("You won!");
+    expect(question).toHaveBeenCalledTimes(3);
+  });
+});
 
-test('handle not in range inputs', () => {
-  const random = jest.fn();
-  random.mockReturnValueOnce(0.86);
-  Math.random = random;
+test("handle too low numbers", () => {
+  return studentCode.then(code => {
+    const random = jest.fn();
+    random.mockReturnValueOnce(0.77);
+    Math.random = random;
 
-  const consoleLog = jest.fn();
-  console.log = consoleLog
+    const consoleLog = jest.fn();
+    console.log = consoleLog;
 
-  const readline = require("readline");
-  const question =  jest.fn()
-    .mockImplementationOnce((_text, callback) => callback("-5"))
-    .mockImplementationOnce((text, callback) => {
-      expect(text).toEqual("The number is between 1 and 100\n")
-      callback("1337")
-    })
-    .mockImplementationOnce((text, callback) => {
-      expect(text).toEqual("The number is between 1 and 100\n")
-      callback("86")
-    })
+    const readline = require("readline");
+    const question = jest
+      .fn()
+      .mockImplementationOnce((_text, callback) => callback("21"))
+      .mockImplementationOnce((text, callback) => {
+        expect(text).toEqual("Too low\n");
+        callback("77");
+      });
 
-  const reader = jest.fn((_object) => ({question: question, close: jest.fn()}));
+    const reader = jest.fn(_object => ({
+      question: question,
+      close: jest.fn()
+    }));
 
-  readline.createInterface = reader;
+    readline.createInterface = reader;
 
-  const executedCode = eval(studentCode);
+    const executedCode = eval(code);
 
-  expect(consoleLog).toHaveBeenCalledWith("You won!");
-  expect(question).toHaveBeenCalledTimes(3);
-})
+    expect(consoleLog).toHaveBeenCalledWith("You won!");
+    expect(question).toHaveBeenCalledTimes(2);
+  });
+});
 
-test('handle too low numbers', () => {
-  const random = jest.fn();
-  random.mockReturnValueOnce(0.77);
-  Math.random = random;
+test("handle too high numbers", () => {
+  return studentCode.then(code => {
+    const random = jest.fn();
+    random.mockReturnValueOnce(0.35);
+    Math.random = random;
 
-  const consoleLog = jest.fn();
-  console.log = consoleLog
+    const consoleLog = jest.fn();
+    console.log = consoleLog;
 
-  const readline = require("readline");
-  const question =  jest.fn()
-    .mockImplementationOnce((_text, callback) => callback("21"))
-    .mockImplementationOnce((text, callback) => {
-      expect(text).toEqual("Too low\n")
-      callback("77")
-    })
+    const readline = require("readline");
+    const question = jest
+      .fn()
+      .mockImplementationOnce((_text, callback) => callback("52"))
+      .mockImplementationOnce((text, callback) => {
+        expect(text).toEqual("Too high\n");
+        callback("35");
+      });
 
-  const reader = jest.fn((_object) => ({question: question, close: jest.fn()}));
+    const reader = jest.fn(_object => ({
+      question: question,
+      close: jest.fn()
+    }));
 
-  readline.createInterface = reader;
+    readline.createInterface = reader;
 
-  const executedCode = eval(studentCode);
+    const executedCode = eval(code);
 
-  expect(consoleLog).toHaveBeenCalledWith("You won!");
-  expect(question).toHaveBeenCalledTimes(2);
-})
-
-test('handle too high numbers', () => {
-  const random = jest.fn();
-  random.mockReturnValueOnce(0.35);
-  Math.random = random;
-
-  const consoleLog = jest.fn();
-  console.log = consoleLog
-
-  const readline = require("readline");
-  const question =  jest.fn()
-    .mockImplementationOnce((_text, callback) => callback("52"))
-    .mockImplementationOnce((text, callback) => {
-      expect(text).toEqual("Too high\n")
-      callback("35")
-    })
-
-  const reader = jest.fn((_object) => ({question: question, close: jest.fn()}));
-
-  readline.createInterface = reader;
-
-  const executedCode = eval(studentCode);
-
-  expect(consoleLog).toHaveBeenCalledWith("You won!");
-  expect(question).toHaveBeenCalledTimes(2);
-})
+    expect(consoleLog).toHaveBeenCalledWith("You won!");
+    expect(question).toHaveBeenCalledTimes(2);
+  });
+});

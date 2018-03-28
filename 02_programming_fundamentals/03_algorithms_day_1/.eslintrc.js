@@ -8,7 +8,10 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "rules": {
-        "indent": ["error", 2], // 2 spaces indentation
+        "indent": ["error", 2, { // 2 spaces indentation
+          "SwitchCase": 1, // indentation inside switch
+          "ObjectExpression": 1, // indentation inside objects
+        }],
         "linebreak-style": ["error","unix"], // line-breaks are unix
         "quotes": ["error", "double"], // enforces double quotes
         "semi": ["error", "always"], // semicolons must be there

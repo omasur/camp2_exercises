@@ -1,41 +1,47 @@
 /* global beforeAll test expect */
 const fs = require("fs");
 const path = require("path");
+const readcode = require("../../../.test_utils/readcode");
 
 let studentCode;
-
 beforeAll(() => {
-  // Loads the content of the student's code
-  return new Promise(function(resolve, reject) {
-    fs.readFile(path.join(__dirname, "../08_iteration_with_while.js"), "utf8", function(
-      err,
-      text
-    ) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      studentCode = text;
-      resolve();
-    });
-  });
+  // Loads the student's code
+  studentCode = readcode(
+    path.resolve(__dirname, "../08_iteration_with_while.js")
+  );
+  return studentCode;
 });
 
 test("print numbers from zero to nine", () => {
-  numbers = [];
-  _consolelog = console.log;
-  console.log = thing => numbers.push(thing);
+  return studentCode.then(code => {
+    numbers = [];
+    _consolelog = console.log;
+    console.log = thing => numbers.push(thing);
 
-  eval(studentCode);
+    eval(code);
 
-  console.log = _consolelog;
+    console.log = _consolelog;
 
-  expect(numbers).toEqual(['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']);
+    expect(numbers).toEqual([
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine"
+    ]);
+  });
 });
 
 test("one while was used", () => {
-  const whiles = studentCode.match(/while(\s*?)\(.*?\)/gm);
+  return studentCode.then(code => {
+    const whiles = code.match(/while(\s*?)\(.*?\)/gm);
 
-  expect(whiles).toBeTruthy();
-  expect(whiles.length).toBe(1);
+    expect(whiles).toBeTruthy();
+    expect(whiles.length).toBe(1);
+  });
 });

@@ -13,6 +13,6 @@ const person = {
   introduceMyself: function() {
     // Your code here
   }
-}
+};
 
 module.exports = person;

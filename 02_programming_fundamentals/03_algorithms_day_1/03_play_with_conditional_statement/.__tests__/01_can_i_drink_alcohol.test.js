@@ -1,81 +1,79 @@
 /* global beforeAll test expect */
 const fs = require("fs");
 const path = require("path");
+const readcode = require("../../../.test_utils/readcode");
 
 let studentCode;
-
 beforeAll(() => {
-  // Loads the content of the student's code
-  return new Promise(function(resolve, reject) {
-    fs.readFile(
-      path.join(__dirname, "../01_can_i_drink_alcohol.js"),
-      "utf8",
-      function(err, text) {
-        if (err) {
-          reject(err);
-          return;
-        }
-        studentCode = text;
-        resolve();
-      }
-    );
-  });
+  // Loads the student's code
+  studentCode = readcode(
+    path.resolve(__dirname, "../01_can_i_drink_alcohol.js")
+  );
+  return studentCode;
 });
 
 test("Frieda should be inside an object frieda", () => {
-  const frieda = eval(studentCode + "; frieda;");
+  return studentCode.then(code => {
+    const frieda = eval(code + "; frieda;");
 
-  expect(frieda.age).toBe(22);
-  expect(frieda.name).toBe("Frieda");
+    expect(frieda.age).toBe(22);
+    expect(frieda.name).toBe("Frieda");
+  });
 });
 
 test("Francis should be inside an object francis", () => {
-  const francis = eval(studentCode + "; francis;");
+  return studentCode.then(code => {
+    const francis = eval(code + "; francis;");
 
-  expect(francis.age).toBe(17);
-  expect(francis.name).toBe("Francis");
+    expect(francis.age).toBe(17);
+    expect(francis.name).toBe("Francis");
+  });
 });
 
 describe("Frieda and alchohol", () => {
   test("Frieda should be able to drink alcohol", () => {
-    const canFriedaDrinkAlcohol = eval(
-      studentCode + "; canFriedaDrinkAlcohol;"
-    );
+    return studentCode.then(code => {
+      const canFriedaDrinkAlcohol = eval(code + "; canFriedaDrinkAlcohol;");
 
-    expect(canFriedaDrinkAlcohol).toBe(true);
+      expect(canFriedaDrinkAlcohol).toBe(true);
+    });
   });
 
   test("Frieda should not be able to drink alcohol if we change her age", () => {
-    const changedStudentCode = studentCode.replace(
-      new RegExp(/(let|const) canFriedaDrinkAlcohol/m),
-      "frieda.age = 15; $&"
-    );
-    const canFriedaDrinkAlcohol = eval(
-      changedStudentCode + "; canFriedaDrinkAlcohol;"
-    );
+    return studentCode.then(code => {
+      const changedStudentCode = code.replace(
+        new RegExp(/(let|const) canFriedaDrinkAlcohol/m),
+        "frieda.age = 15; $&"
+      );
+      const canFriedaDrinkAlcohol = eval(
+        changedStudentCode + "; canFriedaDrinkAlcohol;"
+      );
 
-    expect(canFriedaDrinkAlcohol).toBe(false);
+      expect(canFriedaDrinkAlcohol).toBe(false);
+    });
   });
 });
 
 describe("Francis and alchohol", () => {
   test("Francis should not be able to drink alcohol", () => {
-    const canFrancisDrinkAlcohol = eval(
-      studentCode + "; canFrancisDrinkAlcohol;"
-    );
+    return studentCode.then(code => {
+      const canFrancisDrinkAlcohol = eval(code + "; canFrancisDrinkAlcohol;");
 
-    expect(canFrancisDrinkAlcohol).toBe(false);
+      expect(canFrancisDrinkAlcohol).toBe(false);
+    });
   });
 
   test("Francis should be able to drink alcohol if we change his age", () => {
-    const changedStudentCode = studentCode.replace(
-      new RegExp(/(let|const) canFrancisDrinkAlcohol/m),
-      "francis.age = 22; $&"
-    );
-    const canFrancisDrinkAlcohol = eval(
-      changedStudentCode + "; canFrancisDrinkAlcohol;"
-    );
+    return studentCode.then(code => {
+      const changedStudentCode = code.replace(
+        new RegExp(/(let|const) canFrancisDrinkAlcohol/m),
+        "francis.age = 22; $&"
+      );
+      const canFrancisDrinkAlcohol = eval(
+        changedStudentCode + "; canFrancisDrinkAlcohol;"
+      );
 
-    expect(canFrancisDrinkAlcohol).toBe(true);
+      expect(canFrancisDrinkAlcohol).toBe(true);
+    });
   });
 });

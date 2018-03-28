@@ -2,12 +2,15 @@
   "name": "02_play_with_arrays",
   "version": "1.0.0",
   "description": "",
-  "main": "01_arrays.js",
+  "main": ".test_utils/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "eslint . && jest"
   },
   "license": "ISC",
   "devDependencies": {
     "jest": "^21.2.1"
+  },
+  "jest": {
+    "noStackTrace": true
   }
 }
