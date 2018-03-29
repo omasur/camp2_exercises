@@ -12,7 +12,7 @@ beforeAll(() => {
 
 test("display the sea (remember that array keys start at 0 😉)", () => {
   return studentCode.then(code => {
-    output = [];
+    const output = [];
     _consolelog = console.log;
     console.log = thing => output.push(thing);
 

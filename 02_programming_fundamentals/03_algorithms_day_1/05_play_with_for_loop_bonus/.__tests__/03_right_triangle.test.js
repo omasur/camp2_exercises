@@ -12,7 +12,7 @@ beforeAll(() => {
 
 test("display a right triangle", () => {
   return studentCode.then(code => {
-    output = [];
+    const output = [];
     _consolelog = console.log;
     console.log = thing => output.push(thing);
 

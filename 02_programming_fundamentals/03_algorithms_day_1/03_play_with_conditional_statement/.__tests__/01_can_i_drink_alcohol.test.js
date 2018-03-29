@@ -30,7 +30,7 @@ test("Francis should be inside an object francis", () => {
   });
 });
 
-describe("Frieda and alchohol", () => {
+describe("Frieda and alcohol", () => {
   test("Frieda should be able to drink alcohol", () => {
     return studentCode.then(code => {
       const canFriedaDrinkAlcohol = eval(code + "; canFriedaDrinkAlcohol;");
@@ -54,7 +54,7 @@ describe("Frieda and alchohol", () => {
   });
 });
 
-describe("Francis and alchohol", () => {
+describe("Francis and alcohol", () => {
   test("Francis should not be able to drink alcohol", () => {
     return studentCode.then(code => {
       const canFrancisDrinkAlcohol = eval(code + "; canFrancisDrinkAlcohol;");

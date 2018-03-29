@@ -12,7 +12,7 @@ beforeAll(() => {
 
 test("should work with the default example", () => {
   return studentCode.then(code => {
-    output = [];
+    const output = [];
     _consolelog = console.log;
     console.log = thing => output.push(thing);
 
@@ -25,7 +25,7 @@ test("should work with the default example", () => {
 
 test("should work when changing numberOfLine", () => {
   return studentCode.then(code => {
-    output = [];
+    const output = [];
     _consolelog = console.log;
     console.log = thing => output.push(thing);
 

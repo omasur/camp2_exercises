@@ -12,7 +12,7 @@ beforeAll(() => {
 
 test("print numbers from zero to nine", () => {
   return studentCode.then(code => {
-    numbers = [];
+    const numbers = [];
     _consolelog = console.log;
     console.log = thing => numbers.push(thing);
 
