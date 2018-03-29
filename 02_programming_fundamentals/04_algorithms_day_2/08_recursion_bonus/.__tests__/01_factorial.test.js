@@ -8,7 +8,3 @@ test('it should work', () => {
 test('it should return null for negative numbers', () => {
   expect(fact(-1)).toBe(null);
 });
-
-test('it should not work with a string', () => {
-  expect(fact('0')).toBe(null);
-});

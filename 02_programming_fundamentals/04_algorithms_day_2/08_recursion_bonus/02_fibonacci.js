@@ -5,8 +5,7 @@
 // preceding ones : 0, 1, 1, 2, 3, 5, 8, 13, 21...
 //
 // It does not work for negative numbers and your function
-// should return `null` if tried with a negative number or
-// with something else than a number.
+// should return `null` if tried with a negative number.
 //
 // Implement a `fibo` function that takes an argument n and returns
 // the n'th value of the sequence.

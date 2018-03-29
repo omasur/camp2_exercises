@@ -9,7 +9,3 @@ test('it should work', () => {
 test('it should return null for negative numbers', () => {
   expect(fibo(-1)).toBe(null);
 });
-
-test('it should not work with a string', () => {
-  expect(fibo('0')).toBe(null);
-});
