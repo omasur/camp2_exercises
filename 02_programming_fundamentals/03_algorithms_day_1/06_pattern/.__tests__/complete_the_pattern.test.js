@@ -1,13 +1,37 @@
-const pattern = require("../complete_the_pattern");
+/* global beforeAll test expect */
+const fs = require("fs");
+const path = require("path");
+const readcode = require("../../../.test_utils/readcode");
 
+let studentCode;
+beforeAll(() => {
+  // Loads the student's code
+  studentCode = readcode(path.resolve(__dirname, "../complete_the_pattern.js"));
+  return studentCode;
+});
 
-test("should not work with zero and under", () => {
-  expect(pattern(0)).toEqual("");
-  expect(pattern(-2)).toEqual("");
-})
+test("should work with the default example", () => {
+  return studentCode.then(code => {
+    const output = [];
+    _consolelog = console.log;
+    console.log = thing => output.push(thing);
 
-test("should work with simple values", () => {
-  expect(pattern(1)).toEqual("1");
-  expect(pattern(2)).toEqual("21\n2");
-  expect(pattern(5)).toEqual("54321\n5432\n543\n54\n5");
-})
+    eval(code);
+
+    console.log = _consolelog;
+    expect(output.join("\n")).toEqual("54321\n5432\n543\n54\n5");
+  });
+});
+
+test("should work when changing numberOfLine", () => {
+  return studentCode.then(code => {
+    const output = [];
+    _consolelog = console.log;
+    console.log = thing => output.push(thing);
+
+    eval(code.replace("const numberOfLine = 5;", "const numberOfLine = 1;"));
+
+    console.log = _consolelog;
+    expect(output).toEqual(["1"]);
+  });
+});

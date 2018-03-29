@@ -4,7 +4,7 @@
   "description": "display number in descending order",
   "main": "complete_the_pattern.js",
   "scripts": {
-    "test": "jest"
+    "test": "eslint . && jest"
   },
   "license": "ISC",
   "devDependencies": {

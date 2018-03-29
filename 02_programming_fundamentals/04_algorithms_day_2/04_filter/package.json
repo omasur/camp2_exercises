@@ -4,7 +4,7 @@
   "description": "You have to write a few functions to filter an array.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "eslint . && jest"
   },
   "author": "",
   "license": "ISC",
