@@ -8,6 +8,17 @@ const driver = {
 // Write a function canRentACar:
 // * Input: a driver
 // * Output: a boolean if the driver can rent a car
+function canRentACar (driver) {
+  let canRentACar1;
+  if (driver.driverLicense.substring(0,1)==="B" && driver.licenseIssued<=2016 && (driver.numberOfAccident===0 || driver.bonus>=0.7)) {
+    canRentACar1 = true;
+  } else {
+    canRentACar1 = false;
+  }
+  console.log(canRentACar1);
+  return canRentACar1;
+}
+canRentACar(driver);
 
 
 
