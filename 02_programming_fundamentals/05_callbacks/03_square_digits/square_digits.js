@@ -23,3 +23,28 @@ console.log(squareDigits(419));
 // Do not remove last lines, it is for tests
 // eslint-disable-next-line
 module.exports = squareDigits;
+
+/// Corrigé pour l'intérieur de la fonction
+// const numberString = number.toString();
+//
+// const digits =
+//   numberString
+//     .split("")
+//     .map((digitString) => parseInt(digitString, 10))
+//
+// const digitSquared = digits.map((digit) => digit * digit);
+// const digitsJoined = digitSquared.join("");
+// return parseInt(digitsJoined,10);
+
+// Corrigé amélioré
+// function squareDigits(number) {
+//   const squareDigitsString =
+//     number
+//       .toString()
+//       .split("")
+//       .map((digitString) => parseInt(digitString, 10))
+//       .map((digit) => digit * digit)
+//       .join("");
+// 
+//   return parseInt(squareDigitsString, 10);
+// }

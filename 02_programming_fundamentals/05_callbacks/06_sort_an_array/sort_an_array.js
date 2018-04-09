@@ -8,7 +8,12 @@
 
 function sort(unsortedArray) {
   // Your code here
+  return unsortedArray.sort(function(a, b) {
+    return a - b;
+  });
 }
+
+console.log(sort([24, 7, 9, 72, -8]));
 
 // Do not remove last lines, it is for tests
 // eslint-disable-next-line
