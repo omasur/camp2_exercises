@@ -10,27 +10,27 @@
 */
 
 //let list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-let list = [1, 2, 3, 4, 5, 6];
-function map1 (array) {
-  let newArray;
-  if ((array % 3 === 0) && (array % 5 === 0)) {
-    newArray = "FizzBuzz";
-  } else if (array % 5 === 0) {
-    newArray = "Buzz";
-  } else if (array % 3 === 0) {
-    newArray = "Fizz";
+let listTest = [1, 2, 3, 4, 5, 6];
+function fizzify (number) {
+  let result;
+  if ((number % 3 === 0) && (number % 5 === 0)) {
+    result = "FizzBuzz";
+  } else if (number % 5 === 0) {
+    result = "Buzz";
+  } else if (number % 3 === 0) {
+    result = "Fizz";
   } else {
-    newArray = array;
+    result = number;
   }
   //console.log(newArray);
-  return newArray;
-}
-//map1 = list.map(fizzBuzz);
-function fizzBuzz(list) {
-  return list.map(map1);
+  return result;
 }
 
-console.log(list);
-console.log(fizzBuzz(list));
+function fizzBuzz(list) {
+  return list.map(fizzify);
+}
+
+console.log(listTest);
+console.log(fizzBuzz(listTest));
 
 module.exports = fizzBuzz;
