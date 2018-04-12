@@ -5,22 +5,37 @@
 const fs = require("fs");
 
 const pathOri = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundamentals/07_file_management/01_basic_fs/folderToto/toto";
-const pathDest = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundamentals/07_file_management/01_basic_fs/folderTiti/toto";
+const pathDest = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundamentals/07_file_management/01_basic_fs/folderTiti/titi";
 
 function cutPaste (sourceFilename, targetFilename) {
 // Copy -- if success -> delete
-  fs.copyFile(sourceFilename, targetFilename, (err) => {
-    if (err) throw err;
-    deleteFile (sourceFilename);
-    console.log(`${sourceFilename} was copied to ${targetFilename}`);
-  });
-
+  if (fs.existsSync(sourceFilename) === false) {
+    return false;
+  } else {
+    if (fs.lstatSync(sourceFilename).isDirectory() === true) {
+      return false;
+    } else {
+      fs.copyFile(sourceFilename, targetFilename, (err) => {
+        if (err) {
+          console.warn("aie !! Issue with copy");
+          return false;
+        }
+        deleteFile (sourceFilename);
+        console.log(`${sourceFilename} was copied to ${targetFilename}`);
+        return true;
+      });
+    }
+  }
 }
 
 function deleteFile (fileToDelete) {
   fs.unlink(fileToDelete, (err) => {
-    if (err) throw err;
+    if (err) {
+      console.warn("aie !! Issue with delete");
+      return;
+    }
     console.log(`File ${fileToDelete} successfully deleted`);
+    return true;
   });
 }
 

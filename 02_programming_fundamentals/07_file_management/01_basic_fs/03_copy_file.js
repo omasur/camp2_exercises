@@ -29,10 +29,10 @@ copyPaste (pathOri,pathDest);
 
 module.exports = copyPaste;
 
-function fileExist (path2) {
-  if (fs.existsSync(path2) === true) {
-    return true;
-  } else {
+function fileExist (path) {
+  try {
+    return fs.existsSync(path);
+  } catch(error) {
     return false;
   }
 }
