@@ -5,22 +5,49 @@
 // The function returns a boolean indicating if it successfully removed the file.
 const fs = require("fs");
 
-const pathOri = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundamentals/07_file_management/01_basic_fs/folderToto/toto";
-const pathDest = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundamentals/07_file_management/01_basic_fs/folderTiti/toto";
+const pathOri = "toto";
+const pathDest = "titi";
 
 function copyPaste (sourceFilename, targetFilename) {
-// Copy -- if success -> delete
-  fs.copyFile(sourceFilename, targetFilename, (err) => {
-    if (err) throw err;
-
-    console.log(`${sourceFilename} was copied to ${targetFilename}`);
-  });
-  // fs.unlink(pathToDelete, (err) => {
-  //   if (err) throw err;
-  //   console.log(`File ${pathToTest} successfully deleted`);
-  // });
+  if (fileExist (targetFilename) === false) {
+    fs.readFile (sourceFilename, (error, data) => {
+      if (error) {
+        console.warn(error);
+        return;
+      }
+      fs.writeFile (targetFilename, data, (error) => {
+        if (error) {
+          console.warn(error);
+          return;
+        }
+      });
+    });
+  }
 }
 
 copyPaste (pathOri,pathDest);
 
 module.exports = copyPaste;
+
+function fileExist (path2) {
+  if (fs.existsSync(path2) === true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+//
+// function copyPaste (sourceFilename, targetFilename) {
+// // Copy -- if success -> delete
+//   if (fileExist (targetFilename) === false) {
+//     fs.copyFile(sourceFilename, targetFilename, (err) => {
+//       if (err) {
+//         console.warn("aie !!");
+//       } else {
+//         console.log(`${sourceFilename} was copied to ${targetFilename}`);
+//       }
+//     });
+//   } else {
+//     return false;
+//   }
+// }

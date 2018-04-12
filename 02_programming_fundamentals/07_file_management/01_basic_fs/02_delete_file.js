@@ -7,34 +7,58 @@ const fs = require("fs");
 //const stats = require("stats");
 
 const pathToTest = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundamentals/07_file_management/01_basic_fs/folderToto/toto";
-//let pathToTest;
 
-function deleteFile (pathToDelete) {
-  let fileDeleted;
-  if (isAFile(pathToDelete) === true) {
-    fs.unlinkSync(pathToDelete);
-    if (fs.existsSync(pathToDelete) === false) {
-      fileDeleted = true;
-    } else {
-      fileDeleted = false;
+function deleteFile (fileToDelete) {
+  fs.unlink(fileToDelete, (err) => {
+    if (err) {
+      console.warn("aie !!");
+      return;
     }
-  } else {
-    fileDeleted = false; //note a file
-  }
-  return fileDeleted;  //console.log(`File ${pathToTest} successfully deleted`);
-}
-
-function isAFile (path1) {
-  let stats = fs.statSync(path1);
-  if (stats.isFile() === true) {
-    return true;
-  } else {
-    return false;
-  }
+    console.log(`File ${fileToDelete} successfully deleted`);
+  });
 }
 
 deleteFile (pathToTest);
 
-
-
 module.exports = deleteFile;
+
+
+// //let pathToTest;
+// function fileExist (path2) {
+//   if (fs.existsSync(path2) === true) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+//
+// function isAFile (path1) {
+//   let stats = fs.statSync(path1);
+//   console.log ("path is a file" , path1);
+//   if (stats.isFile() === true) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+//
+// function deleteFile (pathToDelete) {
+//   let returnCode;
+//   if (fileExist (pathToDelete) === true && isAFile(pathToDelete) === true) {
+//     console.log ("exist and a File");
+//     fs.unlinkSync(pathToDelete);
+//     if (fileExist (pathToDelete) === false) {
+//       returnCode = true;
+//       console.log ("tout est ok");
+//     } else {
+//       returnCode = false;
+//       console.log ("suppr ko.le fichier existe encore");
+//     }
+//   } else {
+//     console.log ("imposs car fichier absent ou n'est pas un fichier");
+//     returnCode = false; //note a file
+//   }
+//
+//   console.log ("Code retour" , returnCode);
+//   return returnCode;  //console.log(`File ${pathToTest} successfully deleted`);
+// }
