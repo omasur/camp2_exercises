@@ -10,9 +10,11 @@ const pathDest = "/Users/Olivier/Workspace/camp2_exercises/02_programming_fundam
 function cutPaste (sourceFilename, targetFilename) {
 // Copy -- if success -> delete
   if (fs.existsSync(sourceFilename) === false) {
+    console.log("aie !! File not exist");
     return false;
   } else {
     if (fs.lstatSync(sourceFilename).isDirectory() === true) {
+      console.log("aie !! Is a folder");
       return false;
     } else {
       fs.copyFile(sourceFilename, targetFilename, (err) => {

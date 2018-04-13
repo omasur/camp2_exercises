@@ -12,7 +12,7 @@ const car = {
     return this;
   },
   drive : function (minutesVal) {
-    this.distance = this.distance + (this.speed * minutesVal / 60);
+    this.distance += this.speed * minutesVal / 60;
     return this;
   },
   showDistance : function () {
