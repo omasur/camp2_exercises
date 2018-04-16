@@ -13,6 +13,49 @@ const state = {
   c: Array(3).fill(null)
 };
 
+const WINNING_COORDINATES = [
+  [
+    { letter: "a", digit: "0" },
+    { letter: "a", digit: "1" },
+    { letter: "a", digit: "2" }
+  ],
+  [
+    { letter: "b", digit: "0" },
+    { letter: "b", digit: "1" },
+    { letter: "b", digit: "2" }
+  ],
+  [
+    { letter: "c", digit: "0" },
+    { letter: "c", digit: "1" },
+    { letter: "c", digit: "2" }
+  ],
+  [
+    { letter: "a", digit: "0" },
+    { letter: "b", digit: "1" },
+    { letter: "c", digit: "2" }
+  ],
+  [
+    { letter: "a", digit: "2" },
+    { letter: "b", digit: "1" },
+    { letter: "c", digit: "0" }
+  ],
+  [
+    { letter: "a", digit: "0" },
+    { letter: "b", digit: "0" },
+    { letter: "c", digit: "0" }
+  ],
+  [
+    { letter: "a", digit: "1" },
+    { letter: "b", digit: "1" },
+    { letter: "c", digit: "1" }
+  ],
+  [
+    { letter: "a", digit: "2" },
+    { letter: "b", digit: "2" },
+    { letter: "c", digit: "2" }
+  ]
+];
+
 let currentPlayer;
 
 function renderCell(cell) {
@@ -65,6 +108,33 @@ function getCoordinate(input) {
   }
 }
 
+function flattenArray(arrayOfArray) {
+  return arrayOfArray.reduce((newArray, array) =>
+    newArray.concat(array), []);
+}
+
+function hasWinner() {
+  function hasWinningLine(coordinates) {
+    const line = coordinates.map(function(coordinate) {
+      return state[coordinate.letter][coordinate.digit];
+    }).join("");
+
+    return line === "XXX" || line === "OOO";
+  }
+
+  return WINNING_COORDINATES.some(hasWinningLine);
+}
+
+function isGameFinished() {
+  const cells = flattenArray(Object.values(state));
+
+  return cells.every(isNotNull);
+}
+
+function isNotNull(something) {
+  return something !== null;
+}
+
 function handleInput(input) {
   if (input === "q") {
     reader.close();
@@ -72,11 +142,22 @@ function handleInput(input) {
     const coordinate = getCoordinate(input);
     if (coordinate !== null) {
       updateState(coordinate);
-      nextPlayer();
+      if (hasWinner()) {
+        console.log(renderBoard());
+        console.log(`Congratulations, ${currentPlayer}, you won!`);
+        reader.close();
+      } else if (isGameFinished()) {
+        console.log(renderBoard());
+        console.log("Unfortunately, this is a draw ¯\\_(ツ)_/¯");
+        reader.close();
+      } else {
+        nextPlayer();
+        playTurn();
+      }
     } else {
       console.log("This is not a valid move!");
+      playTurn();
     }
-    playTurn();
   }
 }
 
