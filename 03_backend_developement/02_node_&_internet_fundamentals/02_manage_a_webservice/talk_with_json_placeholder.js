@@ -126,7 +126,7 @@ function updatePostTitle(postId, newTitle, callback)  {
       form: {
         title: newTitle
       },
-      method: "PUT"
+      method: "PATCH"
     },
     function(error,response,result) {
       callback(result);
@@ -141,7 +141,7 @@ function updatePostBody(postId, newBody, callback)  {
       form: {
         body: newBody
       },
-      method: "PUT"
+      method: "PATCH"
     },
     function(error,response,result) {
       callback(result);
@@ -157,7 +157,7 @@ function updatePost(postId, newTitle, newBody, callback)  {
         title: newTitle,
         body: newBody
       },
-      method: "PUT"
+      method: "PATCH"
     },
     function(error,response,result) {
       callback(result);
