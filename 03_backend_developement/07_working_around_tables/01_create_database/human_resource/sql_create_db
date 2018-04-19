@@ -1,0 +1,81 @@
+CREATE TABLE regions (
+    id int NOT NULL,
+    name character varying(255)
+);
+
+CREATE TABLE locations (
+    id int NOT NULL,
+    street_address character varying(255),
+    postal_code character varying(255),
+    city character varying(255),
+    state_province character varying(255),
+    country_id int
+);
+
+CREATE TABLE jobs (
+    id int NOT NULL,
+    code character varying(255),
+    title character varying(255),
+    min_salary numeric,
+    max_salary numeric
+);
+
+CREATE TABLE job_history (
+    id int NOT NULL,
+    employee_id int,
+    start_date date,
+    end_date date,
+    job_id int,
+    department_id int
+);
+
+CREATE TABLE job_grades (
+    id int NOT NULL,
+    level character varying(1),
+    lowest_salary numeric,
+    highest_salary numeric
+);
+
+CREATE TABLE employees (
+    id int NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    email character varying(255),
+    phone_number character varying(255),
+    hire_date date,
+    job_id int,
+    salary numeric,
+    commission_pct numeric,
+    manager_id int,
+    department_id int
+);
+
+CREATE TABLE departments (
+    id int NOT NULL,
+    name character varying(255),
+    manager_id int,
+    location_id int
+);
+
+
+CREATE TABLE countries (
+    id int NOT NULL,
+    code character varying(2),
+    name character varying(255),
+    region_id int
+);
+
+
+
+
+SELECT * FROM regions;
+
+DROP TABLE *;
+
+CREATE TABLE persons (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    lastname character varying(255),
+    firstname character varying(255),
+    address character varying(255),
+    city character varying(255)
+);

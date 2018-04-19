@@ -7,5 +7,5 @@ function greet(name) {
 
   return `Hello ${greetingName.toUpperCase()}!`;
 }
-
+//console.log(greet("toto"));
 module.exports = greet;
