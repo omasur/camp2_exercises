@@ -1,7 +1,19 @@
 
-// Coffee Machine usage. Insert your code above this comment
-const machine = require("./machine");
-console.log(sum(1, 2)) // 3
+const container = require("./container");
+
+const machine = {
+  expresso: function() {
+    return container.consumeLitersOfCoffee(0.08);
+  },
+  fillWithLitersOfCoffee: function(liters) {
+    container.putLitersOfCoffee(liters);
+  },
+  longCoffee: function() {
+    return container.consumeLitersOfCoffee(0.15);
+  }
+};
+
+module.exports = machine;
 
 machine.fillWithLitersOfCoffee(10);
 console.log(machine.expresso()); // => true

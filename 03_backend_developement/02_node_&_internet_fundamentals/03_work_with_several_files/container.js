@@ -1,33 +1,18 @@
-const machine = {
-  litersOfCoffee: 0,
-  expressoQuantity: 0.08,
-  longCoffeeQuantity: 0.15,
-
-};
+let litersOfCoffee = 0;
 
 function putLitersOfCoffee(numberOfLiters) {
-  fillWithLitersOfCoffee: function (liters) {
-    this.litersOfCoffee += liters;
-  }
+  litersOfCoffee += numberOfLiters;
 }
 
 function consumeLitersOfCoffee(numberOfLiters) {
-  expresso: function () {
-    if (this.litersOfCoffee < this.expressoQuantity) {
-      return false;
-    }
-    this.litersOfCoffee -= this.expressoQuantity;
-    return true;
-  },
-  longCoffee: function () {
-    if (this.litersOfCoffee < this.longCoffeeQuantity) {
-      return false;
-    }
-    this.litersOfCoffee -= this.longCoffeeQuantity;
-    return true;
+  if (litersOfCoffee < numberOfLiters) {
+    return false;
   }
+  litersOfCoffee -= numberOfLiters;
+  return true;
 }
 
 module.exports = {
-  putLitersOfCoffee
-}
+  putLitersOfCoffee: putLitersOfCoffee,
+  consumeLitersOfCoffee: consumeLitersOfCoffee
+};

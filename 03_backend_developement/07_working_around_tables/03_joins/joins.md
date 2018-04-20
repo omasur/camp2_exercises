@@ -2,6 +2,10 @@
 
 1. Write a query in SQL to display the first name, last name, department number, and department name for each employee.
 
+  select first_name, last_name, a0.department_id, a1.name
+  from employees a0
+  left outer join departments a1 on a1.id=a0.department_id
+
 2. Write a query in SQL to display the first and last name, department, city, and state province for each employee.
 
 3. Write a query in SQL to display the first name, last name, salary, and job grade for all employees.
