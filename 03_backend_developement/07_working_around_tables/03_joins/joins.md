@@ -13,6 +13,11 @@
 4. Write a query in SQL to display the first name, last name, department number and department name, for all employees
 for departments 8 or 4.
 
+  select a0.first_name, a0.last_name, a0.department_id, a1.name
+  from employees a0
+  left outer join departments a1 on a1.id=a0.department_id
+  where a0.department_id in (8,4);
+
 5. Write a query in SQL to display those employees who contain a letter z to their first name and also display their
 last name, department, city, and state province.
 
@@ -37,6 +42,8 @@ same department as the employee who hold the last name as Taylor.
 13. Write a query in SQL to display the job title, department name, full name (first and last name ) of employee, and
 starting date for all the jobs which started on or after 1st January, 1993 and ending with on or before 31 August, 1997.
 
+
+
 14. Write a query in SQL to display job title, full name (first and last name ) of employee, and the difference between
 maximum salary for the job and salary of the employee.
 
@@ -50,10 +57,23 @@ who is working in the department which ID is 8.
 
 18. Write a query in SQL to display department name and the full name (first and last name) of the manager.
 
-19. Write a query in SQL to display job title and average salary of employees.
+  select a1.title, round(avg(a0.salary))
+  from employees a0
+  left outer join jobs a1 on a1.id=a0.job_id
+  group by a1.title
+  order by 2 desc;
 
 20. Write a query in SQL to display the details of jobs which was done by any of the employees who is presently earning
 a salary on and above 12000.
+
+  select a1.*
+  from employees a0
+  inner join job_history a1 on a1.employee_id=a0.id
+  where a0.salary >12000;
+
+  select * from job_history a0
+  where a0.employee_id in (select id from employees where salary >12000);
+
 
 22. Write a query in SQL to display the department name, full name (first and last name) of manager, and their city.
 
@@ -68,5 +88,16 @@ those employees with worked without a commission percentage.
 
 26. Write a query in SQL to display the department name and number of employees in each of the department.
 
+  select concat (a0.first_name, a0.last_name) fullname, a3.id
+  from employees a0
+  left outer join departments a1 on a1.id=a0.department_id
+  left outer join locations a2 on a2.id=a1.location_id;
+
 27. Write a query in SQL to display the full name (fisrt and last name ) of employee with ID and name of the country
 presently where (s)he is working.
+
+  select concat (a0.first_name, a0.last_name) fullname, a3.id, a3.name
+  from employees a0
+  left outer join departments a1 on a1.id=a0.department_id
+  left outer join locations a2 on a2.id=a1.location_id
+  left outer join countries a3 on a3.id=a2.country_id;

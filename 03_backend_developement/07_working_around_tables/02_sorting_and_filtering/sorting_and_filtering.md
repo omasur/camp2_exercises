@@ -106,6 +106,10 @@ their phone number equals 3 and make the result set in a descending order by the
 19. Write a query in SQL to display the first and last name, and department number for those employees who holds a
 letter s as a 3rd character in their first name.
 
+  select a0.first_name, a0.last_name, a0.department_id
+  from employees a0
+  where substring(first_name, 3, 1) = 's';
+
 20. Write a query in SQL to display the employee ID, first name, job id, and department number for those employees who
 is working except the departments 5, 3 and 8.
 
