@@ -32,3 +32,8 @@ CREATE TABLE "public"."product_categories" (
     "category_id" uuid,
     PRIMARY KEY ("id")
 );
+
+CREATE TABLE "public"."product_categories" (
+    "id" uuid,
+    "category_id" uuid
+);

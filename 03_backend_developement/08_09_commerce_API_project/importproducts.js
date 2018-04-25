@@ -5,8 +5,6 @@ client.connect();
 let counter = 0
 
 function products (callback) {
-
-  // const txt = "Welcom to the hotel California";
   const url = "https://decath-product-api.herokuapp.com/products";
   request({ url: url }, function (error, response, body) {
     let bodyLength = JSON.parse(body).length;
@@ -20,11 +18,10 @@ function products (callback) {
 function truncate (table) {
   client.query(
     `truncate table ${table}`,
-    // [table],
     function(error, result) {
       if (error) {
         console.warn(error);
-      } else { // do something with result
+      } else {
         console.log("truncate done");
       }
     }
@@ -38,11 +35,10 @@ function insert (row, bodyLength) {
     function(error, result) {
       if (error) {
         console.warn(error);
-      } else { // do something with result
+      } else {
       }
       counter++;
       if (counter >= bodyLength) {
-        // console.log(counter);
         client.end();
       }
     }
@@ -50,4 +46,3 @@ function insert (row, bodyLength) {
 }
 
 products(insert);
-// insert("cbe1c32e-faa9-4911-ad8e-4422f2b627c9","titi");
