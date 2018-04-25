@@ -1,5 +1,6 @@
 const OAuth = require("oauth");
 const request = require("request");
+const fetch = require("node-fetch");
 
 const oauth = new OAuth.OAuth(
   process.env.TWITTER_REQUEST_URL,
@@ -10,6 +11,22 @@ const oauth = new OAuth.OAuth(
 );
 const url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=";
 
+// function mypromise() {
+//   new Promise(function(resolve, reject) {
+//     if (camarche) {
+//       resolve(result)
+//     } else (camarchepas) {
+//       reject(error)
+//     }
+//
+//   });
+// }
+// fetch(url + "Decathlon",
+// process.env.TWITTER_ACCESS_TOKEN,
+// process.env.TWITTER_ACCESS_SECRET)
+//   .then((response) => response.json())
+//   .then((result) => console.log(JSON.stringify(result)))
+
 function twitson(twitterUsername) {
   oauth.get(
     url + twitterUsername,
@@ -18,7 +35,8 @@ function twitson(twitterUsername) {
     function (error, data) {
       const tweets = JSON.parse(data);
       function getText(element) {
-        return element.text;
+        // console.log(element.text);
+        return element.text
       }
       const texts = tweets.map(getText).join("\n\n");
       const username = process.env.WATSON_USERNAME;
@@ -27,11 +45,28 @@ function twitson(twitterUsername) {
       const auth = "Basic " + new Buffer(username + ":" + password).toString("base64");
       const uri = encodeURI(url + "/v1/analyze?version=2017-02-27&features=sentiment,emotion&language=en&text=" + texts);
 
-      request({ url: uri, headers: { "Authorization": auth } }, function (error, response, body) {
-        console.log(body);
-      });
+      fetch(uri,
+        {
+        headers: { "Authorization": auth },
+        method: "GET"
+        })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Sentiments : ", result.sentiment);
+          console.log("Emotions : ", result.emotion);
+        }
+        )
     }
   );
 }
 
-twitson("neiltyson");
+// function emotion () {
+// }
+
+twitson("Decathlon");
+
+// twitson("neiltyson")
+//   .then(watsonResult => {
+//     console.log("sentiments", watsonResult.sentiment);
+//     console.log("emotions", watsonResult.emotion);
+//   });
