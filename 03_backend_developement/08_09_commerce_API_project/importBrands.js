@@ -54,7 +54,7 @@ function insert (id, title, bodyLength) {
 brands(insert);
 
 
-// Version récurcive corrigée
+// Correction Version récurcive 
 // const request = require("request");
 // const PG = require("pg");
 //
