@@ -27,8 +27,9 @@
     </div>
     <script src="./departments.js"></script>
     <script>
-      // Your code here
-      // the departments are accessible in a global variable named DEPARTMENTS
+        DEPARTMENTS.forEach(function(dpt) {
+        document.querySelector("#department-list").innerHTML+=`<li>${dpt}</li>`;
+        });
     </script>
   </body>
 </html>
