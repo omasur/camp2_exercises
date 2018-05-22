@@ -1,3 +1,5 @@
 node_modules
 .env_var
 Pictures
+.sass-cache
+06_react_redux/01_es6_fundamentals/01_aquarium/coverage
