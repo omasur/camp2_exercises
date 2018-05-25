@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 
-function Button(props) {
-  return <button onClick={props.action}>Refresh image</button>
-}
-
 
 function fetchDog() {
   return fetch ('https://random.dog/woof.json')
@@ -32,8 +28,7 @@ class DogApp extends Component {
   render() {
     return (
       <div className="App">
-        <Button action={this.refreshUrl.bind(this)}/>
-        <br/>
+        <button onClick={this.refreshUrl.bind(this)}>Refresh image</button><br/>   {/*on appelle pas la fonction refreshUrl directement avec ()*/}
         Url : {this.state.url}
         <br/>
         <img src={this.state.url}/>
