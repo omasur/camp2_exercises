@@ -13,6 +13,7 @@ function fetchDog() {
 }
 
 
+
 class DogApp extends Component {
   constructor(props) {
     super(props);

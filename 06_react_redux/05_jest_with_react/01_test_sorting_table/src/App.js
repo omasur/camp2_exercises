@@ -22,6 +22,7 @@ class App extends Component {
   }
 
   filter(filterBy) {
+    console.log("hey");
     if (this.state.sortedBy === filterBy) {
       this.setState({reverseSort: !this.state.reverseSort});
     } else {
