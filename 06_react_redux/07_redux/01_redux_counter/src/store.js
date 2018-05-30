@@ -3,8 +3,8 @@ import {createStore} from "redux"
 
 
 const initialState = {
-  counterValue: 10,
-  counterColor: "red",
+  counterValue: 0,
+  counterColor: "red",   //pour le fun
 }
 
 function counterReducer(state = initialState, action) {
