@@ -10,7 +10,7 @@ const initialState = {
 function counterReducer(state = initialState, action) {
   switch (action.type) {
   case 'INCREMENT':
-    const newCounterValue = state.counterValue + 1;
+    const newCounterValue = state.counterValue + action.nbIncrement;
     return {
       ...state,
       counterValue: newCounterValue

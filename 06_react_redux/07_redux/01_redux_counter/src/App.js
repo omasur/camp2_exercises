@@ -13,11 +13,11 @@ class App extends Component {
   }
 
   handlerClickMoins() {
-    this.props.mondecrement(2);
+    this.props.myDecrement(1);
   }
 
   handlerClickPlus() {
-    this.props.increment();
+    this.props.myIncrement(1);
   }
 
   render() {
@@ -39,8 +39,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    increment: () => dispatch({type: "INCREMENT"}),
-    mondecrement: (nb) => dispatch({type: "DECREMENT", nbDecrement: nb})
+    myIncrement: (nbIncr) => dispatch({type: "INCREMENT", nbIncrement: nbIncr}),
+    myDecrement: (nbDecr) => dispatch({type: "DECREMENT", nbDecrement: nbDecr})
   }
 }
 
