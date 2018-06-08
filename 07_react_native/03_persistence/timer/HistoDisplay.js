@@ -1,26 +1,23 @@
 import React from "react";
-import { StyleSheet, Text, TouchableHighlight, View , TouchableOpacity, TextInput} from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View , TouchableOpacity, TextInput, Line} from "react-native";
 import displayTime from "./displayTime";
 
-export default class HistoDisplay extends React.Component {
-
-  // list() => {
-  //   console.log("rien");
-  // };
-  // {props.name} : {displayTime(props.timer)}
-
+export default function(props) {
+  //Why pas de table tr th ? Comment faire le tableau ?
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.title}>name  time</Text>
+        <Text style={styles.title}> List of counters</Text>
+          {props.timers.map((value,id) => {
+            return (
+              <Text style={styles.list} key={id}>{value.name} : {displayTime(value.timer)} </Text>
+            );
+          })}
       </View>
 
       <View style={styles.menuHeader}>
-        <TouchableOpacity onPress={console.log("rien1")} style={{flex: 1,height: 50, backgroundColor: 'grey'}}>
-          <Text style={styles.menuStyle}>New Counter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={console.log("rien2")} style={{flex: 1,height: 50, backgroundColor: 'grey'}}>
-          <Text style={styles.menuStyle}>Histo</Text>
+        <TouchableOpacity onPress={props.switchToTimer} style={{flex: 1,height: 50, backgroundColor: 'grey'}}>
+          <Text style={styles.menuStyle}>Back to Timer</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,7 +38,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 60,
+    fontSize: 45,
+  },
+  list: {
+    color: "white",
+    fontSize: 30,
   },
   timer: {
     color: "white",

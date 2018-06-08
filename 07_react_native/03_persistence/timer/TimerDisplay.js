@@ -7,7 +7,7 @@ export default function(props) {
     <View style={styles.container}>
       <View style={styles.container}>
         <TextInput style={styles.title} onChangeText={(text) => props.addCounter(text)} value={props.name}/>
-        <Text style={styles.title}>{displayTime(props.timer)}</Text>
+        <Text style={styles.counter}>{displayTime(props.timer)}</Text>
         <TouchableHighlight style={styles.button} onPress={
           props.started
           ? props.stop
@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   title: {
+    color: "white",
+    fontSize: 40,
+  },
+  counter: {
     color: "white",
     fontSize: 60,
   },
