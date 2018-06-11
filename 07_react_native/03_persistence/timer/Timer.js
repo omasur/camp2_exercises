@@ -7,7 +7,7 @@ export default class Timer extends React.Component {
   constructor(props) {
   super(props);
   this.state = {
-    name: "Your counter",
+    name: "",
     timer: 0,
     started: false
   };

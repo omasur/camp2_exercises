@@ -2,11 +2,14 @@ import React from "react";
 import { StyleSheet, Text, TouchableHighlight, View , TouchableOpacity, TextInput} from "react-native";
 import displayTime from "./displayTime";
 
+// Comment mettre un onClick effacer Your counter ?
+
 export default function(props) {
+  console.log("props1",props);
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        <TextInput style={styles.title} onChangeText={(text) => props.addCounter(text)} value={props.name}/>
+        <TextInput style={styles.title} onChangeText={(text) => props.addCounter(text)} value={props.name} placeholder="Your counter" placeholderTextColor="white"/>
         <Text style={styles.counter}>{displayTime(props.timer)}</Text>
         <TouchableHighlight style={styles.button} onPress={
           props.started

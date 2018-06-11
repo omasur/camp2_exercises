@@ -3,7 +3,11 @@ import { StyleSheet, Text, TouchableHighlight, View , TouchableOpacity, TextInpu
 import displayTime from "./displayTime";
 
 export default function(props) {
-  //Why pas de table tr th ? Comment faire le tableau ?
+  //Why pas de table tr th ? Comment faire le tableau ? FlatList
+
+
+
+  console.log("props",props);
   return (
     <View style={styles.container}>
       <View style={styles.container}>

@@ -14,6 +14,7 @@ export default class App extends Component {
     };
     this.updateTimers = this.updateTimers.bind (this);
     this.switchToHisto = this.switchToHisto.bind (this);
+    this.switchToTimer = this.switchToTimer.bind (this);
   }
 
   updateTimers (name, timer) {
@@ -28,23 +29,24 @@ export default class App extends Component {
 
   switchToHisto () {
     this.setState({
-      screen: [... this.state.screen, {screen: "Histo"}]
+      screen: "Histo",
     });
-    screenC = "Histo"
+    // screenC = "Histo"
   }
 
   switchToTimer () {
+    console.log("switchToTimer done: ", this.switchToTimer);
     this.setState({
-      screen: [... this.state.screen, {screen: "Timer"}]
+      screen: "Timer",
     });
-    screenC = "Timer"
+    // screenC = "Timer"
   }
 
 
   render() {
-    if (screenC === "Timer") {
+    if (this.state.screen === "Timer") {
       return <Timer timers={this.state.timers} updateTimers={this.updateTimers} switchToHisto={this.switchToHisto}/>
-    } else if (screenC === "Histo") {
+    } else if (this.state.screen === "Histo") {
       console.log("Histo");
       // return 0;
       return <HistoDisplay timers={this.state.timers} switchToTimer={this.switchToTimer}/>;
